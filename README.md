@@ -1,5 +1,12 @@
 # Markdown Inline Editor
 
+> This is jn's personal build of [Markdown Inline Editor](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode). It retains the upstream MIT license and adds configurable H1/H2 rendered-heading scales:
+>
+> ```json
+> "markdownInlineEditor.headings.h1Scale": 150,
+> "markdownInlineEditor.headings.h2Scale": 125
+> ```
+
 <img src="assets/icon.png" align="right" alt="Markdown Inline Editor icon" width="120" height="120">
 
 [![Build & quality][ci-img]][ci] [![Dependency health][audit-img]][audit] [![Install on VS Code][marketplace-img]][marketplace] [![Get on Open VSX][openvsx-img]][openvsx] [![MIT License][license-img]][license]

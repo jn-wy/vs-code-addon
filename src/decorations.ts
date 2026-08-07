@@ -274,8 +274,8 @@ export function HeadingDecorationType() {
  * Heading decoration configuration
  */
 const HEADING_CONFIG = [
-  { size: '180%', bold: true },  // H1: Distinct, but not overwhelming
-  { size: '140%', bold: true },  // H2: Clearly a subsection
+  { size: '180%', bold: true },  // H1: overridden by headings.h1Scale
+  { size: '140%', bold: true },  // H2: overridden by headings.h2Scale
   { size: '120%', bold: true },  // H3: Just above body text
   { size: '110%', bold: false }, // H4: Subtle bump
   { size: '100%', bold: false }, // H5: Same size, usually distinct by color/bold
@@ -288,11 +288,12 @@ const HEADING_CONFIG = [
  * @param {string | ThemeColor | undefined} color - Optional hex or theme color. When **undefined** (empty extension setting = theme default), the decoration **omits** `color` so the editor keeps syntax-highlighted markdown heading colors for the active theme. When set, that color overrides the token foreground for the decorated range.
  * @returns {vscode.TextEditorDecorationType} A decoration type for the heading level
  */
-function createHeadingDecoration(level: number, color?: string | ThemeColor) {
+function createHeadingDecoration(level: number, color?: string | ThemeColor, scale?: number) {
   const config = HEADING_CONFIG[level - 1];
   if (!config) throw new Error(`Invalid heading level: ${level}`);
+  const size = scale === undefined ? config.size : `${Math.max(100, Math.min(250, scale))}%`;
   const options: Record<string, unknown> = {
-    textDecoration: `none; font-size: ${config.size};`,
+    textDecoration: `none; font-size: ${size};`,
     ...(config.bold ? { fontWeight: 'bold' } : {}),
   };
   if (color !== undefined) {
@@ -302,12 +303,12 @@ function createHeadingDecoration(level: number, color?: string | ThemeColor) {
 }
 
 /** @param color - When undefined (empty setting), omit `color` so theme markdown heading syntax colors apply. */
-export function Heading1DecorationType(color?: string | ThemeColor) {
-  return createHeadingDecoration(1, color);
+export function Heading1DecorationType(color?: string | ThemeColor, scale?: number) {
+  return createHeadingDecoration(1, color, scale);
 }
 /** @param color - When undefined (empty setting), omit `color` so theme markdown heading syntax colors apply. */
-export function Heading2DecorationType(color?: string | ThemeColor) {
-  return createHeadingDecoration(2, color);
+export function Heading2DecorationType(color?: string | ThemeColor, scale?: number) {
+  return createHeadingDecoration(2, color, scale);
 }
 /** @param color - When undefined (empty setting), omit `color` so theme markdown heading syntax colors apply. */
 export function Heading3DecorationType(color?: string | ThemeColor) {

@@ -57,6 +57,18 @@ export const config = {
         .get<number>('decorations.codeBlockLanguageOpacity', 0.3);
     },
   },
+  headings: {
+    h1Scale(): number {
+      return vscode.workspace
+        .getConfiguration(SECTION)
+        .get<number>('headings.h1Scale', 150);
+    },
+    h2Scale(): number {
+      return vscode.workspace
+        .getConfiguration(SECTION)
+        .get<number>('headings.h2Scale', 125);
+    },
+  },
   emojis: {
     enabled(): boolean {
       return vscode.workspace

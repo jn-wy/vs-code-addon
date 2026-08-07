@@ -1,11 +1,11 @@
 {
-  "name": "markdown-inline-editor-vscode",
-  "displayName": "Markdown Inline Editor",
-  "version": "1.24.2",
-  "description": "WYSIWYG inline markdown editor - hide syntax, focus on content",
+  "name": "jn-markdown-inline-editor",
+  "displayName": "jn Markdown Inline Editor",
+  "version": "1.24.3",
+  "description": "Personal build of Markdown Inline Editor with configurable heading scales.",
   "license": "MIT",
   "author": "SeardnaSchmid",
-  "publisher": "CodeSmith",
+  "publisher": "jn-local",
   "private": true,
   "icon": "assets/icon.png",
   "repository": {
@@ -111,6 +111,22 @@
           "maximum": 1,
           "description": "Opacity for code block language identifiers",
           "markdownDescription": "Opacity of code block language identifiers (0.0-1.0)."
+        },
+        "markdownInlineEditor.headings.h1Scale": {
+          "type": "number",
+          "default": 150,
+          "minimum": 100,
+          "maximum": 250,
+          "description": "H1 size as a percentage of the editor font size.",
+          "markdownDescription": "H1 size as a percentage of the editor font size. Default: 150."
+        },
+        "markdownInlineEditor.headings.h2Scale": {
+          "type": "number",
+          "default": 125,
+          "minimum": 100,
+          "maximum": 250,
+          "description": "H2 size as a percentage of the editor font size.",
+          "markdownDescription": "H2 size as a percentage of the editor font size. Default: 125."
         },
         "markdownInlineEditor.links.showEmoji": {
           "type": "boolean",
