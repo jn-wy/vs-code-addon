@@ -2,7 +2,7 @@
 
 This repository distributes two local VSIX extensions:
 
-- `releases/jn-markdown-inline-editor-1.24.3.vsix` — Markdown Inline Editor fork with configurable H1/H2 scales.
+- `releases/jn-markdown-inline-editor-1.24.4.vsix` — Markdown Inline Editor fork with configurable H1/H2 scales.
 - `themes/jn-themes/releases/jn-themes-0.3.1.vsix` — the jn light-theme collection.
 
 Run the installer from a clone on the machine running the VS Code UI:
