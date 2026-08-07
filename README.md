@@ -10,11 +10,13 @@ Personal VS Code add-ons for comfortable Markdown writing:
 Each patch is a reviewable delivery. Before considering a change done, the maintainer must:
 
 1. Run the relevant validation.
-2. Commit the patch with a descriptive Conventional Commit message.
-3. Push the commit to `origin/main`.
-4. Report the commit ID and any installable VSIX artifact.
+2. For any extension change, create a new versioned VSIX release. A source-only commit is not installable by users.
+3. Commit the patch, its version/changelog update, and the versioned VSIX in `releases/` with descriptive Conventional Commit messages.
+4. Update `scripts/install-local.sh` to install that new VSIX.
+5. Push the commit and release tag to `origin/main`.
+6. Report the commit ID, version, tag, and installable VSIX artifact.
 
-This lets a VS Code client pull the repository and install/test every completed change without relying on uncommitted local work.
+Do not treat an ignored `dist/extension.vsix` as a release artifact: it is local-only and is not obtained by `git pull`. Verify that the VSIX manifest has the new version before pushing. This lets a VS Code client pull the repository and install/test every completed change without relying on uncommitted local work.
 
 ## Install or update on a VS Code client
 
