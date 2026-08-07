@@ -1,0 +1,37 @@
+{
+  "name": "jn-themes",
+  "displayName": "jn Themes",
+  "description": "Personal light themes for Markdown writing and VS Code work.",
+  "version": "0.3.1",
+  "publisher": "jn-local",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Themes"],
+  "files": ["themes", "README.md", "LICENSE"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "jn Milkshake Mango + Deep Raspberry",
+        "uiTheme": "vs",
+        "path": "./themes/jn-milkshake-mango-deep-raspberry-color-theme.json"
+      },
+      {
+        "label": "jn Milkshake Mango + Deep Teal",
+        "uiTheme": "vs",
+        "path": "./themes/jn-milkshake-mango-deep-teal-color-theme.json"
+      },
+      {
+        "label": "jn Milkshake Mango + Soft Cobalt",
+        "uiTheme": "vs",
+        "path": "./themes/jn-milkshake-mango-soft-cobalt-color-theme.json"
+      },
+      {
+        "label": "jn Mango Paper Markdown",
+        "uiTheme": "vs",
+        "path": "./themes/jn-mango-paper-markdown-color-theme.json"
+      }
+    ]
+  }
+}
