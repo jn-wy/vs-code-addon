@@ -5,6 +5,17 @@ Personal VS Code add-ons for comfortable Markdown writing:
 - **jn Themes** — Milkshake Mango variants plus Mango Paper Markdown.
 - **jn Markdown Inline Editor** — a personal build of Markdown Inline Editor with smaller, configurable rendered heading sizes.
 
+## Delivery workflow
+
+Each patch is a reviewable delivery. Before considering a change done, the maintainer must:
+
+1. Run the relevant validation.
+2. Commit the patch with a descriptive Conventional Commit message.
+3. Push the commit to `origin/main`.
+4. Report the commit ID and any installable VSIX artifact.
+
+This lets a VS Code client pull the repository and install/test every completed change without relying on uncommitted local work.
+
 ## Install or update on a VS Code client
 
 Run this on the machine where the VS Code window is displayed. Do not run it only inside an SSH host or development container: themes and editor UI extensions run on the VS Code client.
