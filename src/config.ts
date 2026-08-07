@@ -68,6 +68,16 @@ export const config = {
         .getConfiguration(SECTION)
         .get<number>('headings.h2Scale', 125);
     },
+    h3Scale(): number {
+      return vscode.workspace
+        .getConfiguration(SECTION)
+        .get<number>('headings.h3Scale', 120);
+    },
+    h4Scale(): number {
+      return vscode.workspace
+        .getConfiguration(SECTION)
+        .get<number>('headings.h4Scale', 110);
+    },
   },
   emojis: {
     enabled(): boolean {

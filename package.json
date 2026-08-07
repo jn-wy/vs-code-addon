@@ -131,6 +131,22 @@
           "description": "H2 size as a percentage of the editor font size.",
           "markdownDescription": "H2 size as a percentage of the editor font size. Default: 125."
         },
+        "markdownInlineEditor.headings.h3Scale": {
+          "type": "number",
+          "default": 120,
+          "minimum": 100,
+          "maximum": 250,
+          "description": "H3 size as a percentage of the editor font size.",
+          "markdownDescription": "H3 size as a percentage of the editor font size. Default: 120."
+        },
+        "markdownInlineEditor.headings.h4Scale": {
+          "type": "number",
+          "default": 110,
+          "minimum": 100,
+          "maximum": 250,
+          "description": "H4 size as a percentage of the editor font size.",
+          "markdownDescription": "H4 size as a percentage of the editor font size. Default: 110."
+        },
         "markdownInlineEditor.links.showEmoji": {
           "type": "boolean",
           "default": false,

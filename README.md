@@ -41,7 +41,9 @@ Open **Preferences: Open User Settings (JSON)** and add or change:
 ```json
 {
   "markdownInlineEditor.headings.h1Scale": 150,
-  "markdownInlineEditor.headings.h2Scale": 125
+  "markdownInlineEditor.headings.h2Scale": 125,
+  "markdownInlineEditor.headings.h3Scale": 120,
+  "markdownInlineEditor.headings.h4Scale": 110
 }
 ```
 

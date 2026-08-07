@@ -86,6 +86,8 @@ export class Decorator {
       getCodeBlockLanguageOpacity: () => this.getCodeBlockLanguageOpacity(),
       getHeading1Scale: () => config.headings.h1Scale(),
       getHeading2Scale: () => config.headings.h2Scale(),
+      getHeading3Scale: () => config.headings.h3Scale(),
+      getHeading4Scale: () => config.headings.h4Scale(),
       getHeading1Color: () => config.colors.heading1(),
       getHeading2Color: () => config.colors.heading2(),
       getHeading3Color: () => config.colors.heading3(),

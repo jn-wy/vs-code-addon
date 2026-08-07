@@ -57,6 +57,15 @@ describe('decoration creation with color (hex vs theme)', () => {
       expect(Heading2DecorationType()).toBeDefined();
       expect(Heading1DecorationType(new ThemeColor('editor.foreground'))).toBeDefined();
     });
+
+    it.each([
+      [Heading3DecorationType, 110],
+      [Heading4DecorationType, 105],
+    ] as const)('uses the configured scale for H3 and H4', (factory, scale) => {
+      factory(undefined, scale);
+      const opts = getLastTextEditorDecorationTypeOptions() as Record<string, unknown>;
+      expect(opts.textDecoration).toContain(`font-size: ${scale}%`);
+    });
   });
 
   describe('heading levels H1–H6 theme default (US2)', () => {

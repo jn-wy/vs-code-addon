@@ -44,6 +44,8 @@ type RegistryOptions = {
   getCodeBlockLanguageOpacity: () => number;
   getHeading1Scale?: () => number;
   getHeading2Scale?: () => number;
+  getHeading3Scale?: () => number;
+  getHeading4Scale?: () => number;
   getHeading1Color?: () => string | undefined;
   getHeading2Color?: () => string | undefined;
   getHeading3Color?: () => string | undefined;
@@ -116,8 +118,8 @@ export class DecorationTypeRegistry {
     this.headingDecorationType = HeadingDecorationType();
     this.heading1DecorationType = Heading1DecorationType(this.options.getHeading1Color?.(), this.options.getHeading1Scale?.());
     this.heading2DecorationType = Heading2DecorationType(this.options.getHeading2Color?.(), this.options.getHeading2Scale?.());
-    this.heading3DecorationType = Heading3DecorationType(this.options.getHeading3Color?.());
-    this.heading4DecorationType = Heading4DecorationType(this.options.getHeading4Color?.());
+    this.heading3DecorationType = Heading3DecorationType(this.options.getHeading3Color?.(), this.options.getHeading3Scale?.());
+    this.heading4DecorationType = Heading4DecorationType(this.options.getHeading4Color?.(), this.options.getHeading4Scale?.());
     this.heading5DecorationType = Heading5DecorationType(this.options.getHeading5Color?.());
     this.heading6DecorationType = Heading6DecorationType(this.options.getHeading6Color?.());
     this.linkDecorationType = LinkDecorationType(
@@ -214,8 +216,8 @@ export class DecorationTypeRegistry {
   recreateColorDependentTypes(): void {
     this.recreateDecorationType(this.heading1DecorationType, () => Heading1DecorationType(this.options.getHeading1Color?.(), this.options.getHeading1Scale?.()), (t) => { this.heading1DecorationType = t; }, 'heading1');
     this.recreateDecorationType(this.heading2DecorationType, () => Heading2DecorationType(this.options.getHeading2Color?.(), this.options.getHeading2Scale?.()), (t) => { this.heading2DecorationType = t; }, 'heading2');
-    this.recreateDecorationType(this.heading3DecorationType, () => Heading3DecorationType(this.options.getHeading3Color?.()), (t) => { this.heading3DecorationType = t; }, 'heading3');
-    this.recreateDecorationType(this.heading4DecorationType, () => Heading4DecorationType(this.options.getHeading4Color?.()), (t) => { this.heading4DecorationType = t; }, 'heading4');
+    this.recreateDecorationType(this.heading3DecorationType, () => Heading3DecorationType(this.options.getHeading3Color?.(), this.options.getHeading3Scale?.()), (t) => { this.heading3DecorationType = t; }, 'heading3');
+    this.recreateDecorationType(this.heading4DecorationType, () => Heading4DecorationType(this.options.getHeading4Color?.(), this.options.getHeading4Scale?.()), (t) => { this.heading4DecorationType = t; }, 'heading4');
     this.recreateDecorationType(this.heading5DecorationType, () => Heading5DecorationType(this.options.getHeading5Color?.()), (t) => { this.heading5DecorationType = t; }, 'heading5');
     this.recreateDecorationType(this.heading6DecorationType, () => Heading6DecorationType(this.options.getHeading6Color?.()), (t) => { this.heading6DecorationType = t; }, 'heading6');
     this.recreateDecorationType(

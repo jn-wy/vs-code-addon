@@ -276,8 +276,8 @@ export function HeadingDecorationType() {
 const HEADING_CONFIG = [
   { size: '180%', bold: true },  // H1: overridden by headings.h1Scale
   { size: '140%', bold: true },  // H2: overridden by headings.h2Scale
-  { size: '120%', bold: true },  // H3: Just above body text
-  { size: '110%', bold: false }, // H4: Subtle bump
+  { size: '120%', bold: true },  // H3: overridden by headings.h3Scale
+  { size: '110%', bold: false }, // H4: overridden by headings.h4Scale
   { size: '100%', bold: false }, // H5: Same size, usually distinct by color/bold
   { size: '90%', bold: false }, // H6: Slightly diminished
 ];
@@ -311,12 +311,12 @@ export function Heading2DecorationType(color?: string | ThemeColor, scale?: numb
   return createHeadingDecoration(2, color, scale);
 }
 /** @param color - When undefined (empty setting), omit `color` so theme markdown heading syntax colors apply. */
-export function Heading3DecorationType(color?: string | ThemeColor) {
-  return createHeadingDecoration(3, color);
+export function Heading3DecorationType(color?: string | ThemeColor, scale?: number) {
+  return createHeadingDecoration(3, color, scale);
 }
 /** @param color - When undefined (empty setting), omit `color` so theme markdown heading syntax colors apply. */
-export function Heading4DecorationType(color?: string | ThemeColor) {
-  return createHeadingDecoration(4, color);
+export function Heading4DecorationType(color?: string | ThemeColor, scale?: number) {
+  return createHeadingDecoration(4, color, scale);
 }
 /** @param color - When undefined (empty setting), omit `color` so theme markdown heading syntax colors apply. */
 export function Heading5DecorationType(color?: string | ThemeColor) {
