@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.26.0](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/compare/v1.25.0..v1.26.0) - 2026-08-07
+
+### Added
+
+- **(headings)** make h3 and h4 scales configurable - ([e785417](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/e785417d365a059186542cf5f2b0f4faea7684ce))
+
+### Changed
+
+- define vscode add-on delivery workflow - ([b0ded6e](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/b0ded6ea4a1aae2e20f15f275da0ada9464716ff))
+
+### Fixed
+
+- **(release)** rebuild v1.25.0 VSIX with correct baked-in version - ([377c0b6](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/377c0b6c34deed6c77d6e0d504b88147d6216e4f))
+
 ## [1.25.0](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/compare/v1.24.2..v1.25.0) - 2026-08-07
 
 ### Added
