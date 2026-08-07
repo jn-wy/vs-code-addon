@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.25.0](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/compare/v1.24.2..v1.25.0) - 2026-08-07
+
+### Added
+
+- make rendered H1 and H2 scales configurable - ([4b0bc73](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/4b0bc73f0d5c27d048000f1cacb18d5b1fdc8cf4))
+- add jn theme collection 0.3.1 - ([2acef92](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/2acef92bef34f8c23059e917f07d059eff4c54ac))
+- add jn theme collection - ([632e22c](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/632e22cd996b43545bd6afc9ed2ff7d3d64fe97b))
+
+### Changed
+
+- add local VSIX installation workflow - ([8448cc4](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/8448cc40925147796ccbeb8cb61f99e3ef276e7a))
+- add personal installation and update guide - ([e7bef82](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/e7bef824294a56869db1fc0efe21866af8822580))
+
+### Fixed
+
+- **(math)** stop inline $..$ from crossing a paragraph break - ([1fb9ed2](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/1fb9ed2b8a5c22e72adda15de6df8b9b3a1d59eb))
+- run custom Markdown editor on VS Code UI clients - ([a7ed351](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/commit/a7ed3510bedbc3ffdf138751d986c945a54d3997))
+
 ## [1.24.2](https://github.com/SeardnaSchmid/markdown-inline-editor-vscode/compare/v1.24.1..v1.24.2) - 2026-06-12
 
 ### Fixed

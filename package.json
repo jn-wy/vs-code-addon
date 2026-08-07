@@ -1,7 +1,7 @@
 {
   "name": "jn-markdown-inline-editor",
   "displayName": "jn Markdown Inline Editor",
-  "version": "1.24.4",
+  "version": "1.25.0",
   "description": "Personal build of Markdown Inline Editor with configurable heading scales.",
   "license": "MIT",
   "author": "SeardnaSchmid",
