@@ -22,6 +22,9 @@ const MATH_FENCE_LANGUAGES = new Set(['math', 'latex', 'tex']);
  * Escaped \$ does not start/end; empty or whitespace-only content is not treated as math.
  * Inline: $ may have optional whitespace immediately after it and before the closing $;
  * content is trimmed and must be non-empty (so "Price is $10" still has no closing $ → no region).
+ * Inline math must not cross a blank line (paragraph break); a $ separated from the next $
+ * by a blank line does not form a region (fixes false positives like a shell prompt "$"
+ * pairing with an unrelated later "$5" price mention).
  *
  * @param text - Normalized document text (LF only)
  * @returns MathRegion[] in document order, non-overlapping
@@ -151,6 +154,14 @@ function tryMatchInline(text: string, start: number): MathRegion | null {
   while (i < text.length) {
     const idx = text.indexOf('$', i);
     if (idx === -1) return null;
+    // Inline math must not cross a paragraph break. Once a blank line appears
+    // between the opening $ and a candidate closing $, this opening $ can
+    // never be closed — bail out rather than keep hunting past the paragraph
+    // for some later, unrelated $ (e.g. a shell prompt "$" and an unrelated
+    // "$5" price mentioned elsewhere should not pair up as math).
+    if (hasBlankLine(text, start, idx)) {
+      return null;
+    }
     if (isEscapedAt(text, idx)) {
       i = idx + 1;
       continue;
@@ -168,6 +179,11 @@ function tryMatchInline(text: string, start: number): MathRegion | null {
     };
   }
   return null;
+}
+
+/** True if the text between two positions contains a blank line (paragraph break). */
+function hasBlankLine(text: string, from: number, to: number): boolean {
+  return /\n[ \t]*\n/.test(text.slice(from, to));
 }
 
 function scanFencedCodeBlocks(text: string): FencedCodeBlock[] {

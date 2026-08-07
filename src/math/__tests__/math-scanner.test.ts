@@ -142,3 +142,30 @@ describe('scanMathRegions - fence-aware behavior', () => {
     expect(scanMathRegions(text)).toHaveLength(0);
   });
 });
+
+describe('scanMathRegions - inline $ does not cross a blank line', () => {
+  it('does not pair a shell-prompt $ with an unrelated $ in a later paragraph', () => {
+    const text = ['$ export FOO=bar', '', 'Price is $5'].join('\n');
+    expect(scanMathRegions(text)).toHaveLength(0);
+  });
+
+  it('does not pair a skill-invocation $ with an unrelated $ in a later paragraph', () => {
+    const text = ['$ skill foo', 'more text', '', 'and $5 here'].join('\n');
+    expect(scanMathRegions(text)).toHaveLength(0);
+  });
+
+  it('still matches inline math confined to a single paragraph', () => {
+    const text = ['line one', '$x + y$', 'line three'].join('\n');
+    const regions = scanMathRegions(text);
+    expect(regions).toHaveLength(1);
+    expect(regions[0].source).toBe('x + y');
+    expect(regions[0].displayMode).toBe(false);
+  });
+
+  it('block math ($$...$$) may still span a blank line', () => {
+    const text = ['$$', 'E = mc^2', '', 'a^2 + b^2 = c^2', '$$'].join('\n');
+    const regions = scanMathRegions(text);
+    expect(regions).toHaveLength(1);
+    expect(regions[0].displayMode).toBe(true);
+  });
+});

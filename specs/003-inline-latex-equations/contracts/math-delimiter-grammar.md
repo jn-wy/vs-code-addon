@@ -13,9 +13,9 @@ Define the exact rules for recognizing inline and block math so that parser and 
 - **Start**: A single `$` that is not escaped. Optional whitespace may appear immediately after it.
 - **End**: The next single `$` that is not escaped (i.e. not preceded by an odd number of backslashes). Optional whitespace may appear before this `$`.
 - **Content**: The substring between start and end, excluding the delimiters, **trimmed**. Must not be empty after trimming (else do **not** treat as math).
-- **Scope**: Inline math may span multiple lines; the next unescaped `$` closes the region.
+- **Scope**: Inline math must not cross a blank line (paragraph break). The next unescaped `$` closes the region only if no blank line (`\n[ \t]*\n`) occurs between the opening and closing `$`; if a blank line is encountered first, this opening `$` produces **no region** (the scanner does not keep searching past the paragraph break for a later `$`). Use block math (`$$...$$`) for equations that need to span multiple paragraphs.
 
-**Note**: "Price is $10" still produces no region (no closing `$`). `$ 50` with no closing `$` also produces no region.
+**Note**: "Price is $10" still produces no region (no closing `$`). `$ 50` with no closing `$` also produces no region. **Fixed bug**: a lone `$` (e.g. a shell prompt like `$ export FOO=bar` or `$ skill ...`) followed, in a later paragraph, by an unrelated `$` (e.g. a `$5` price) no longer pairs up into a false-positive math region — the blank line between them stops the scan.
 
 ## Block math: `$$...$$`
 
@@ -52,5 +52,6 @@ Define the exact rules for recognizing inline and block math so that parser and 
 - `$$  $$` → no region (whitespace-only content).
 - `$x$ and $y$` → two inline regions.
 - `$$a$$ $$b$$` → two block regions.
+- `$ export FOO=bar\n\nPrice is $5` → no inline region (blank line separates the two `$`; each is left as plain text).
 
 **Currency-style pairs:** `$100$` and `$200$` are valid inline regions (content `100` and `200`) per the rules above. The spec clarifies that *unmatched* “$100” (e.g. “Price is $100”) is not math; no digits-only exclusion is defined in this contract.
