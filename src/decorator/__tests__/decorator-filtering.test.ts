@@ -224,7 +224,7 @@ describe('Decorator filtering behavior', () => {
 
     // Transparent decorations should be skipped (raw state - show actual backticks)
     expect(filtered.has('transparent')).toBe(false);
-    // Code decoration should still be applied (semantic styling)
+    // A cursor-only edit preserves code styling; no selection needs to be visible.
     expect(filtered.get('code')?.length).toBe(1);
   });
 
@@ -242,8 +242,8 @@ describe('Decorator filtering behavior', () => {
 
     // Transparent decorations should be skipped (raw state - show actual backticks)
     expect(filtered.has('transparent')).toBe(false);
-    // Code decoration should still be applied (semantic styling)
-    expect(filtered.get('code')?.length).toBe(1);
+    // Raw mode removes the code background so VS Code's native selection is visible.
+    expect(filtered.has('code')).toBe(false);
   });
 
   it('reveals inline code backticks in raw state when cursor is inside the code', () => {
@@ -260,8 +260,8 @@ describe('Decorator filtering behavior', () => {
 
     // Transparent decorations should be skipped (raw state - show actual backticks)
     expect(filtered.has('transparent')).toBe(false);
-    // Code decoration should still be applied (semantic styling)
-    expect(filtered.get('code')?.length).toBe(1);
+    // Raw mode removes the code background so VS Code's native selection is visible.
+    expect(filtered.has('code')).toBe(false);
   });
 
   it('reveals inline code backticks in raw state when selection covers the code', () => {
@@ -278,8 +278,8 @@ describe('Decorator filtering behavior', () => {
 
     // Transparent decorations should be skipped (raw state - show actual backticks)
     expect(filtered.has('transparent')).toBe(false);
-    // Code decoration should still be applied (semantic styling)
-    expect(filtered.get('code')?.length).toBe(1);
+    // Raw mode removes the code background so VS Code's native selection is visible.
+    expect(filtered.has('code')).toBe(false);
   });
 
   it('keeps code block background and adds selection overlay when selecting inside a code block', () => {

@@ -106,13 +106,21 @@ export function filterDecorationsForEditor(
     if (!range) continue;
     const isActiveLine = activeLines.size > 0 && activeLines.has(range.start.line);
 
-    // Code, code blocks, and frontmatter use backgrounds that can obscure VS Code's
+    // Inline code is rendered by decorating the entire source range, including
+    // backticks. In raw mode, remove that decoration as well as revealing its
+    // markers; otherwise its background sits above VS Code's native selection
+    // and makes just the inline-code segment appear unselected.
+    if (decoration.type === 'code' && rangeIntersectsAny(range, rawRanges)) {
+      continue;
+    }
+
+    // Code blocks and frontmatter use backgrounds that can obscure VS Code's
     // native selection highlight. Keep the semantic background, but add an explicit
     // selection overlay for the selected intersection.
     // On some themes, VS Code's native selection highlight is drawn "under" those
     // backgrounds, making selections appear invisible. We keep the background,
     // but add an explicit selection overlay decoration on top for the intersection.
-    if ((decoration.type === 'code' || decoration.type === 'codeBlock' || decoration.type === 'frontmatter') && selectedRanges.length > 0) {
+    if ((decoration.type === 'codeBlock' || decoration.type === 'frontmatter') && selectedRanges.length > 0) {
       for (const selection of selectedRanges) {
         const intersection = range.intersection(selection);
         if (intersection !== undefined) {

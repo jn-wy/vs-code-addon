@@ -154,24 +154,29 @@ describe('table decoration rendering', () => {
 });
 
 describe('selection overlay for code backgrounds', () => {
-  it('adds selectionOverlay for the selected portion of inline code', () => {
+  it('removes inline-code decoration while a portion is selected', () => {
     const text = '`inline code`';
     const decs: DecorationRange[] = [
       { startPos: 0, endPos: 13, type: 'code' } as any,
     ];
     const editor = makeEditorWithSelection(text, 0, 3, 0, 9);
+    const document = new TextDocument(Uri.file('test.md'), 'markdown', 1, text);
+    const scope: ScopeEntry = {
+      startPos: 0,
+      endPos: 13,
+      range: new Range(document.positionAt(0), document.positionAt(13)) as any,
+      kind: 'code',
+    };
     const result = filterDecorationsForEditor(
       editor as any,
       decs,
-      [],
+      [scope],
       text,
       (s, e, t) => simpleRangeFactory(s, e, t),
     );
 
-    const overlay = result.get('selectionOverlay') as Range[];
-    expect(overlay).toHaveLength(1);
-    expect(overlay[0].start.character).toBe(3);
-    expect(overlay[0].end.character).toBe(9);
+    expect(result.has('code')).toBe(false);
+    expect(result.has('selectionOverlay')).toBe(false);
   });
 
   it('adds selectionOverlay when non-empty selection covers a codeBlock', () => {
