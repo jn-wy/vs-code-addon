@@ -1143,7 +1143,7 @@
       ],
       "settings": {
         "fontStyle": "bold",
-        "foreground": "#da2a5f"
+        "foreground": "#b93136"
       }
     },
     {
@@ -1312,16 +1312,6 @@
       "settings": {
         "foreground": "#514b62",
         "background": "#f3eae3"
-      }
-    },
-    {
-      "scope": [
-        "markup.bold",
-        "punctuation.definition.bold"
-      ],
-      "settings": {
-        "foreground": "#ae6a58",
-        "fontStyle": "bold"
       }
     },
     {
