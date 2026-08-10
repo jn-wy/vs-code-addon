@@ -421,7 +421,7 @@
     "terminalStickyScrollHover.background": "#f8f2ee",
     "textBlockQuote.background": "#0076c533",
     "textBlockQuote.border": "#0076c5b9",
-    "textCodeBlock.background": "#f3eae3",
+    "textCodeBlock.background": "#e7e1df",
     "textLink.activeForeground": "#bd4f27",
     "textLink.foreground": "#bd4f27",
     "textPreformat.background": "#dfb67d",
@@ -1301,8 +1301,8 @@
         "markup.raw.block.markdown"
       ],
       "settings": {
-        "foreground": "#514b62",
-        "background": "#f3eae3"
+        "foreground": "#3f3632",
+        "background": "#e7e1df"
       }
     },
     {
@@ -1310,8 +1310,8 @@
         "fenced_code.block.language"
       ],
       "settings": {
-        "foreground": "#514b62",
-        "background": "#f3eae3"
+        "foreground": "#3f3632",
+        "background": "#e7e1df"
       }
     },
     {
