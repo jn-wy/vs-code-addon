@@ -10,6 +10,8 @@ It deliberately changes only these Markdown treatments:
 
 All other color and UI tokens are retained from Milkshake Mango.
 
+Mango Paper uses a terracotta selection color distinct from the quiet beige active-line highlight, so drag selections remain visible in inline code and ordinary text.
+
 ## Markdown Inline Editor companion settings
 
 Markdown Inline Editor controls inline-code decorations independently of VS Code themes. These user settings keep inline code readable while matching the editor paper instead of applying its default gray overlay:
@@ -24,5 +26,5 @@ Markdown Inline Editor controls inline-code decorations independently of VS Code
 
 ```bash
 npx --yes @vscode/vsce package
-code --install-extension jn-themes-0.2.0.vsix
+code --install-extension jn-themes-0.3.2.vsix
 ```
