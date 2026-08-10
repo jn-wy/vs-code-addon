@@ -421,7 +421,7 @@
     "terminalStickyScrollHover.background": "#f8f2ee",
     "textBlockQuote.background": "#0076c533",
     "textBlockQuote.border": "#0076c5b9",
-    "textCodeBlock.background": "#f3eae3",
+    "textCodeBlock.background": "#e5e3dc",
     "textLink.activeForeground": "#bd4f27",
     "textLink.foreground": "#bd4f27",
     "textPreformat.background": "#dfb67d",
@@ -1143,7 +1143,7 @@
       ],
       "settings": {
         "fontStyle": "bold",
-        "foreground": "#da2a5f"
+        "foreground": "#b93136"
       }
     },
     {
@@ -1301,8 +1301,8 @@
         "markup.raw.block.markdown"
       ],
       "settings": {
-        "foreground": "#514b62",
-        "background": "#f3eae3"
+        "foreground": "#3f3632",
+        "background": "#e5e3dc"
       }
     },
     {
@@ -1310,18 +1310,8 @@
         "fenced_code.block.language"
       ],
       "settings": {
-        "foreground": "#514b62",
-        "background": "#f3eae3"
-      }
-    },
-    {
-      "scope": [
-        "markup.bold",
-        "punctuation.definition.bold"
-      ],
-      "settings": {
-        "foreground": "#ae6a58",
-        "fontStyle": "bold"
+        "foreground": "#3f3632",
+        "background": "#e5e3dc"
       }
     },
     {
