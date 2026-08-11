@@ -425,11 +425,11 @@ export function BlockquoteDecorationType(color?: string | ThemeColor) {
  *
  * Replaces unordered list markers (-, *, +) with a bullet point (•).
  *
- * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses editor.foreground
+ * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses charts.blue
  * @returns {vscode.TextEditorDecorationType} A decoration type for unordered list items
  */
 export function ListItemDecorationType(color?: string | ThemeColor) {
-  const resolvedColor = color ?? new ThemeColor('editor.foreground');
+  const resolvedColor = color ?? new ThemeColor('charts.blue');
   return window.createTextEditorDecorationType({
     textDecoration: 'none; display: none;',
     before: {
@@ -446,11 +446,11 @@ export function ListItemDecorationType(color?: string | ThemeColor) {
  * Hides the original marker (e.g., `1.`, `2)`) and uses per-range renderOptions
  * to display auto-calculated numbers.
  *
- * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses editor.foreground
+ * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses charts.blue
  * @returns {vscode.TextEditorDecorationType} A decoration type for ordered list item markers
  */
 export function OrderedListItemDecorationType(color?: string | ThemeColor) {
-  const resolvedColor = color ?? new ThemeColor('editor.foreground');
+  const resolvedColor = color ?? new ThemeColor('charts.blue');
   return window.createTextEditorDecorationType({
     textDecoration: 'none; display: none;',
     before: {
