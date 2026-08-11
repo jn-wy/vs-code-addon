@@ -420,7 +420,7 @@
     "terminalCursor.foreground": "#c08403",
     "terminalStickyScrollHover.background": "#f8f2ee",
     "textBlockQuote.background": "#9a245f33",
-    "textBlockQuote.border": "#831f51b9",
+    "textBlockQuote.border": "#831f51",
     "textCodeBlock.background": "#eededb",
     "textLink.activeForeground": "#bd4f27",
     "textLink.foreground": "#bd4f27",
