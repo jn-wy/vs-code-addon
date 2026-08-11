@@ -405,11 +405,11 @@ export function IssueReferenceDecorationType(color?: string | ThemeColor) {
  * Replaces '>' characters with a vertical blue bar.
  * Nested blockquotes automatically show multiple bars (one per '>').
  *
- * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses textLink.foreground
+ * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses textBlockQuote.border
  * @returns {vscode.TextEditorDecorationType} A decoration type for blockquote markers
  */
 export function BlockquoteDecorationType(color?: string | ThemeColor) {
-  const resolvedColor = color ?? new ThemeColor('textLink.foreground');
+  const resolvedColor = color ?? new ThemeColor('textBlockQuote.border');
   return window.createTextEditorDecorationType({
     textDecoration: 'none; display: none;',
     before: {
