@@ -56,7 +56,7 @@ export function processBlockquote(
 }
 
 /** Bullet glyphs cycled by unordered-list nesting depth: filled, hollow, square, then repeat. */
-const UNORDERED_BULLET_GLYPHS = ['•', '○', '▪'];
+const UNORDERED_BULLET_GLYPHS = ['•', '◦', '▪'];
 
 function unorderedBulletGlyph(ancestors: Node[]): string {
   const depth = ancestors.filter((node) => node.type === 'list').length - 1;

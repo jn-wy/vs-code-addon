@@ -24,7 +24,7 @@ describe('MarkdownParser - Unordered List Bullet Glyph By Depth', () => {
     const items = result.filter((d) => d.type === 'listItem');
     expect(items).toHaveLength(3);
     expect(items[0].replacement).toBe('• ');
-    expect(items[1].replacement).toBe('○ ');
+    expect(items[1].replacement).toBe('◦ ');
     expect(items[2].replacement).toBe('▪ ');
   });
 
@@ -34,7 +34,7 @@ describe('MarkdownParser - Unordered List Bullet Glyph By Depth', () => {
 
     const items = result.filter((d) => d.type === 'listItem');
     expect(items).toHaveLength(4);
-    expect(items.map((d) => d.replacement)).toEqual(['• ', '○ ', '▪ ', '• ']);
+    expect(items.map((d) => d.replacement)).toEqual(['• ', '◦ ', '▪ ', '• ']);
   });
 
   it('keeps sibling items at the same depth on the same glyph after returning from a nested list', () => {
@@ -44,7 +44,7 @@ describe('MarkdownParser - Unordered List Bullet Glyph By Depth', () => {
     const items = result.filter((d) => d.type === 'listItem');
     expect(items).toHaveLength(3);
     expect(items[0].replacement).toBe('• ');
-    expect(items[1].replacement).toBe('○ ');
+    expect(items[1].replacement).toBe('◦ ');
     expect(items[2].replacement).toBe('• ');
   });
 });
