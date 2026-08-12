@@ -423,7 +423,10 @@ export function BlockquoteDecorationType(color?: string | ThemeColor) {
 /**
  * Creates a decoration type for unordered list item styling.
  *
- * Replaces unordered list markers (-, *, +) with a bullet point (•).
+ * Replaces unordered list markers (-, *, +) with a bullet glyph. Per-item
+ * `renderOptions.before.contentText` (set by the parser based on nesting depth —
+ * filled dot, hollow circle, square, then repeating) overrides the `contentText`
+ * default below, which only applies if no replacement is supplied.
  *
  * @param {string | ThemeColor | undefined} color - Optional hex or theme color; when undefined uses charts.blue
  * @returns {vscode.TextEditorDecorationType} A decoration type for unordered list items

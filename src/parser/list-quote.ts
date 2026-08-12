@@ -55,6 +55,15 @@ export function processBlockquote(
   addScope(scopes, start, end, 'blockquote');
 }
 
+/** Bullet glyphs cycled by unordered-list nesting depth: filled, hollow, square, then repeat. */
+const UNORDERED_BULLET_GLYPHS = ['•', '○', '▪'];
+
+function unorderedBulletGlyph(ancestors: Node[]): string {
+  const depth = ancestors.filter((node) => node.type === 'list').length - 1;
+  const index = Math.max(0, depth) % UNORDERED_BULLET_GLYPHS.length;
+  return UNORDERED_BULLET_GLYPHS[index];
+}
+
 export function processListItem(
   node: ListItem,
   text: string,
@@ -87,7 +96,12 @@ export function processListItem(
     if (tryAddCheckboxDecorations(text, markerStart, markerEnd, end, decorations, false)) {
       return;
     }
-    decorations.push({ startPos: markerStart, endPos: markerEnd, type: 'listItem' });
+    decorations.push({
+      startPos: markerStart,
+      endPos: markerEnd,
+      type: 'listItem',
+      replacement: `${unorderedBulletGlyph(ancestors)} `,
+    });
     return;
   }
 

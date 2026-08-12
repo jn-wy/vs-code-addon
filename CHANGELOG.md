@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.27.0] - 2026-08-12
+
+### Added
+
+- **(list)** unordered list bullet markers now vary by nesting depth: filled dot `•` for top-level items, hollow circle `○` for the second level, square `▪` for the third level, then cycling back to `•` for deeper nesting. Depth is derived from the real mdast list ancestry, not indentation width.
+
 ## [1.26.6] - 2026-08-12
 
 ### Fixed
