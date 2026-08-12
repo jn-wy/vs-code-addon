@@ -15,6 +15,11 @@ type FencedCodeBlock = {
   isMathFence: boolean;
 };
 
+type SkipRange = {
+  startPos: number;
+  endPos: number;
+};
+
 const MATH_FENCE_LANGUAGES = new Set(['math', 'latex', 'tex']);
 
 /**
@@ -22,27 +27,30 @@ const MATH_FENCE_LANGUAGES = new Set(['math', 'latex', 'tex']);
  * Escaped \$ does not start/end; empty or whitespace-only content is not treated as math.
  * Inline: $ may have optional whitespace immediately after it and before the closing $;
  * content is trimmed and must be non-empty (so "Price is $10" still has no closing $ → no region).
- * Inline math must not cross a blank line (paragraph break); a $ separated from the next $
- * by a blank line does not form a region (fixes false positives like a shell prompt "$"
- * pairing with an unrelated later "$5" price mention).
+ * Inline math must be confined to a single line; a $ separated from the next $ by a line
+ * break does not form a region (fixes false positives like a shell prompt "$" pairing with
+ * an unrelated later "$5" price mention, or two unrelated backtick-quoted "$FOO" tokens in
+ * separate list items). Inline backtick code spans are skipped entirely before delimiter
+ * scanning, so a `$` inside `` `code` `` never opens or closes a math region.
  *
  * @param text - Normalized document text (LF only)
  * @returns MathRegion[] in document order, non-overlapping
  */
 export function scanMathRegions(text: string): MathRegion[] {
   const fencedBlocks = scanFencedCodeBlocks(text);
+  const skipRanges = mergeSkipRanges(fencedBlocks, scanInlineCodeSpans(text, fencedBlocks));
   const regions: MathRegion[] = [];
   let i = 0;
   const n = text.length;
-  let fenceIndex = 0;
+  let skipIndex = 0;
 
   while (i < n) {
-    while (fenceIndex < fencedBlocks.length && fencedBlocks[fenceIndex].endPos <= i) {
-      fenceIndex++;
+    while (skipIndex < skipRanges.length && skipRanges[skipIndex].endPos <= i) {
+      skipIndex++;
     }
-    const activeFence = fencedBlocks[fenceIndex];
-    if (activeFence && i >= activeFence.startPos && i < activeFence.endPos) {
-      i = activeFence.endPos;
+    const activeSkip = skipRanges[skipIndex];
+    if (activeSkip && i >= activeSkip.startPos && i < activeSkip.endPos) {
+      i = activeSkip.endPos;
       continue;
     }
 
@@ -154,12 +162,13 @@ function tryMatchInline(text: string, start: number): MathRegion | null {
   while (i < text.length) {
     const idx = text.indexOf('$', i);
     if (idx === -1) return null;
-    // Inline math must not cross a paragraph break. Once a blank line appears
+    // Inline math must be confined to a single line. Once a line break appears
     // between the opening $ and a candidate closing $, this opening $ can
-    // never be closed — bail out rather than keep hunting past the paragraph
+    // never be closed — bail out rather than keep hunting past the line break
     // for some later, unrelated $ (e.g. a shell prompt "$" and an unrelated
-    // "$5" price mentioned elsewhere should not pair up as math).
-    if (hasBlankLine(text, start, idx)) {
+    // "$5" price mentioned elsewhere, or two unrelated $ in separate list
+    // items, should not pair up as math).
+    if (hasLineBreak(text, start, idx)) {
       return null;
     }
     if (isEscapedAt(text, idx)) {
@@ -181,10 +190,83 @@ function tryMatchInline(text: string, start: number): MathRegion | null {
   return null;
 }
 
-/** True if the text between two positions contains a blank line (paragraph break). */
-function hasBlankLine(text: string, from: number, to: number): boolean {
-  return /\n[ \t]*\n/.test(text.slice(from, to));
+/** True if the text between two positions contains a line break. */
+function hasLineBreak(text: string, from: number, to: number): boolean {
+  return text.indexOf('\n', from) !== -1 && text.indexOf('\n', from) < to;
 }
+
+function mergeSkipRanges(fencedBlocks: SkipRange[], codeSpans: SkipRange[]): SkipRange[] {
+  const merged = [...fencedBlocks, ...codeSpans].sort((a, b) => a.startPos - b.startPos);
+  const result: SkipRange[] = [];
+  for (const range of merged) {
+    const last = result[result.length - 1];
+    if (last && range.startPos < last.endPos) {
+      last.endPos = Math.max(last.endPos, range.endPos);
+      continue;
+    }
+    result.push({ ...range });
+  }
+  return result;
+}
+
+/**
+ * Scans for inline backtick code spans (`` `code` ``, ``` ``code`` ```, ...) so their
+ * contents can be excluded from math-delimiter scanning, mirroring CommonMark's rule
+ * that code spans take priority over other inline constructs. Runs already covered by
+ * a fenced code block are skipped, since those backticks belong to the fence, not a span.
+ */
+function scanInlineCodeSpans(text: string, fencedBlocks: FencedCodeBlock[]): SkipRange[] {
+  const spans: SkipRange[] = [];
+  const n = text.length;
+  let i = 0;
+  let fenceIndex = 0;
+
+  while (i < n) {
+    while (fenceIndex < fencedBlocks.length && fencedBlocks[fenceIndex].endPos <= i) {
+      fenceIndex++;
+    }
+    const activeFence = fencedBlocks[fenceIndex];
+    if (activeFence && i >= activeFence.startPos && i < activeFence.endPos) {
+      i = activeFence.endPos;
+      continue;
+    }
+
+    if (text[i] !== '`') {
+      i++;
+      continue;
+    }
+
+    const openStart = i;
+    let j = i;
+    while (j < n && text[j] === '`') j++;
+    const openLength = j - openStart;
+
+    let pos = j;
+    let matched = false;
+    while (pos < n) {
+      if (text[pos] !== '`') {
+        pos++;
+        continue;
+      }
+      const runStart = pos;
+      while (pos < n && text[pos] === '`') pos++;
+      const runLength = pos - runStart;
+      if (runLength === openLength) {
+        spans.push({ startPos: openStart, endPos: pos });
+        i = pos;
+        matched = true;
+        break;
+      }
+    }
+
+    if (!matched) {
+      i = j;
+    }
+  }
+
+  return spans;
+}
+
 
 function scanFencedCodeBlocks(text: string): FencedCodeBlock[] {
   const blocks: FencedCodeBlock[] = [];

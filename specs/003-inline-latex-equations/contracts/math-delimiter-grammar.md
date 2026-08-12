@@ -13,9 +13,10 @@ Define the exact rules for recognizing inline and block math so that parser and 
 - **Start**: A single `$` that is not escaped. Optional whitespace may appear immediately after it.
 - **End**: The next single `$` that is not escaped (i.e. not preceded by an odd number of backslashes). Optional whitespace may appear before this `$`.
 - **Content**: The substring between start and end, excluding the delimiters, **trimmed**. Must not be empty after trimming (else do **not** treat as math).
-- **Scope**: Inline math must not cross a blank line (paragraph break). The next unescaped `$` closes the region only if no blank line (`\n[ \t]*\n`) occurs between the opening and closing `$`; if a blank line is encountered first, this opening `$` produces **no region** (the scanner does not keep searching past the paragraph break for a later `$`). Use block math (`$$...$$`) for equations that need to span multiple paragraphs.
+- **Scope**: Inline math must be confined to a single line. The next unescaped `$` closes the region only if no line break occurs between the opening and closing `$`; if a line break is encountered first, this opening `$` produces **no region** (the scanner does not keep searching past the line break for a later `$`, even within the same paragraph or list item). Use block math (`$$...$$`) for equations that need to span multiple lines.
+- **Code spans**: A `$` inside a backtick-delimited inline code span (e.g. `` `$PPID` ``) is not a math delimiter — code spans are scanned and skipped first, the same way fenced code blocks are, so their contents can never open or close a math region.
 
-**Note**: "Price is $10" still produces no region (no closing `$`). `$ 50` with no closing `$` also produces no region. **Fixed bug**: a lone `$` (e.g. a shell prompt like `$ export FOO=bar` or `$ skill ...`) followed, in a later paragraph, by an unrelated `$` (e.g. a `$5` price) no longer pairs up into a false-positive math region — the blank line between them stops the scan.
+**Note**: "Price is $10" still produces no region (no closing `$`). `$ 50` with no closing `$` also produces no region. **Fixed bug (paragraph)**: a lone `$` (e.g. a shell prompt like `$ export FOO=bar` or `$ skill ...`) followed, in a later paragraph, by an unrelated `$` (e.g. a `$5` price) no longer pairs up into a false-positive math region. **Fixed bug (line break / list items)**: two unrelated `$` on different lines with no blank line between them (e.g. two separate bullet-list items, each containing `` `$PPID` `` in backticks) no longer pair up either — inline math never crosses a line break, and code-span contents are excluded from consideration entirely.
 
 ## Block math: `$$...$$`
 
@@ -53,5 +54,7 @@ Define the exact rules for recognizing inline and block math so that parser and 
 - `$x$ and $y$` → two inline regions.
 - `$$a$$ $$b$$` → two block regions.
 - `$ export FOO=bar\n\nPrice is $5` → no inline region (blank line separates the two `$`; each is left as plain text).
+- `` `$PPID`\nmore text\n`$PPID` `` → no inline region (both `$` are inside backtick code spans, which are excluded before delimiter scanning; a line break between them would also block the pairing even if they were not in code spans).
+- `$x\ny$` → no inline region (line break between the two `$`; each is left as plain text).
 
 **Currency-style pairs:** `$100$` and `$200$` are valid inline regions (content `100` and `200`) per the rules above. The spec clarifies that *unmatched* “$100” (e.g. “Price is $100”) is not math; no digits-only exclusion is defined in this contract.

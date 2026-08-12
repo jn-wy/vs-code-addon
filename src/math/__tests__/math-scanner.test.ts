@@ -154,7 +154,7 @@ describe('scanMathRegions - inline $ does not cross a blank line', () => {
     expect(scanMathRegions(text)).toHaveLength(0);
   });
 
-  it('still matches inline math confined to a single paragraph', () => {
+  it('still matches inline math confined to a single line', () => {
     const text = ['line one', '$x + y$', 'line three'].join('\n');
     const regions = scanMathRegions(text);
     expect(regions).toHaveLength(1);
@@ -167,5 +167,44 @@ describe('scanMathRegions - inline $ does not cross a blank line', () => {
     const regions = scanMathRegions(text);
     expect(regions).toHaveLength(1);
     expect(regions[0].displayMode).toBe(true);
+  });
+});
+
+describe('scanMathRegions - inline $ does not cross a line break', () => {
+  it('does not pair $ that opens on one line with $ on the next line', () => {
+    const text = ['$x', 'y$'].join('\n');
+    expect(scanMathRegions(text)).toHaveLength(0);
+  });
+
+  it('does not pair two $ in separate list items with no blank line between them', () => {
+    const text = [
+      '- Global hooks write reason, `$PPID`, timestamp to a shared log file.',
+      '- A periodic PID-liveness sweep uses `kill -0` on the `$PPID` captured earlier.',
+    ].join('\n');
+    expect(scanMathRegions(text)).toHaveLength(0);
+  });
+});
+
+describe('scanMathRegions - inline code spans are excluded from delimiter scanning', () => {
+  it('does not treat $ inside a single-backtick code span as a math delimiter', () => {
+    const text = 'See `$PPID` for details.';
+    expect(scanMathRegions(text)).toHaveLength(0);
+  });
+
+  it('does not pair $ inside a code span with an unrelated $ elsewhere on the same line', () => {
+    const text = 'Env var `$FOO` costs $5 to look up.';
+    expect(scanMathRegions(text)).toHaveLength(0);
+  });
+
+  it('still matches real inline math alongside an unrelated code span', () => {
+    const text = 'The value `$PPID` and the formula $x + y$ are unrelated.';
+    const regions = scanMathRegions(text);
+    expect(regions).toHaveLength(1);
+    expect(regions[0].source).toBe('x + y');
+  });
+
+  it('does not treat $ inside a double-backtick code span as a math delimiter', () => {
+    const text = 'Use `` `$` `` to show a literal backtick-dollar.';
+    expect(scanMathRegions(text)).toHaveLength(0);
   });
 });

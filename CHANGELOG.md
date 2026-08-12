@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.26.6] - 2026-08-12
+
+### Fixed
+
+- **(math)** inline `$...$` math no longer crosses a line break — the scope was previously "no blank line" (paragraph-wide), which let two unrelated `$` in separate, non-blank-line-separated list items pair up into a false-positive math region spanning the whole list.
+- **(math)** a `$` inside a backtick-delimited inline code span (e.g. `` `$PPID` ``) is now excluded from math-delimiter scanning entirely, matching CommonMark's rule that code spans take priority over other inline constructs. Previously the scanner only skipped fenced code blocks, not inline code spans.
+
 ## [1.26.5] - 2026-08-11
 
 ### Fixed
