@@ -342,7 +342,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@tsconfig/node-lts": "^24.0.0",
+    "@tsconfig/node-lts": "^24.0.1",
     "@vitest/coverage-v8": "^4.1.8",
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.9.1",
